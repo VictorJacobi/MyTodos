@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'taskData.dart';
+import '../providers/taskData.dart';
 import 'package:provider/provider.dart';
 import 'myTaskTile.dart';
 
@@ -14,19 +14,19 @@ class TaskList extends StatelessWidget {
               color: Colors.white,
               child: TextButton(
                 onLongPress: (){
-                  providerData.deleteTask(providerData.myTaskList[index]);
+                  providerData.deleteTask(providerData.myTaskList?[index]);
                 },
                 onPressed: (){
                   return;
                 },
-                child: TaskTile(myTasks: providerData.myTaskList[index].text,checkTile: providerData.myTaskList[index].checkTile,callBackTicker: (value){
-                  providerData.myTaskList[index].checkBox();
+                child: TaskTile(myTasks: providerData.myTaskList?[index].text,checkTile: providerData.myTaskList?[index].checkTile,callBackTicker: (value){
+                  providerData.checkBox(index);
                   providerData.listen();
                 }),
               ),
             );
           },
-          itemCount: Provider.of<MyDataProvider>(context).myTaskList.length ,
+          itemCount: Provider.of<MyDataProvider>(context).myTaskList?.length ,
         );
       },
     );

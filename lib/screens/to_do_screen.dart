@@ -1,18 +1,32 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:my_todos/Utilities/myTaskList.dart';
 import 'package:my_todos/Utilities/Constants.dart';
-import 'package:my_todos/Utilities/taskData.dart';
+import 'package:my_todos/app/locator.dart';
+import 'package:my_todos/providers/taskData.dart';
+import 'package:my_todos/services/hive_service.dart';
 import 'package:provider/provider.dart';
 
 
-String addedTask;
+String? addedTask;
 TaskList myTask = TaskList();
 TextEditingController textFieldController = TextEditingController();
 
-class ToDos extends StatelessWidget {
+class ToDos extends StatefulWidget {
 
+  @override
+  State<ToDos> createState() => _ToDosState();
+}
+
+class _ToDosState extends State<ToDos> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +139,7 @@ class ToDos extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${Provider.of<MyDataProvider>(context).myTaskList.length} tasks',
+                        '${Provider.of<MyDataProvider>(context).myTaskList?.length} tasks',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,

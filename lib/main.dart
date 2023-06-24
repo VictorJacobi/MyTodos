@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:my_todos/Utilities/taskData.dart';
+import 'package:my_todos/app/locator.dart';
+import 'package:my_todos/database/hive_database.dart';
+import 'package:my_todos/providers/taskData.dart';
 import 'package:my_todos/screens/to_do_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  await HiveDatabase.registerHives();
+  setupLocator();
   runApp(MyApp());
 }
 
