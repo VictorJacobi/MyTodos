@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_todos/providers/taskData.dart';
-import 'package:provider/provider.dart';
 
 class TaskTile extends StatelessWidget {
   TaskTile({this.myTasks,this.checkTile, required this.callBackTicker});

@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
-import '../providers/taskData.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_todos/dashboard/presentation/providers/dash_board_state_provider.dart';
 import 'myTaskTile.dart';
 
-class TaskList extends StatelessWidget {
+class TaskList extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    return Consumer<MyDataProvider>(
-      builder: (context,providerData,child){
-        return ListView.builder(
+  Widget build(BuildContext context,WidgetRef ref) {
+    return ListView.builder(
           itemBuilder: (context,index){
             return Material(
               color: Colors.white,
               child: TextButton(
                 onLongPress: (){
-                  providerData.deleteTask(providerData.myTaskList?[index]);
+                  ref.read(myDataStateNotifierProvider.notifier).deleteTask(ref.watch(myDataStateNotifierProvider).myTaskList?[index]);
                 },
                 onPressed: (){
                   return;
                 },
-                child: TaskTile(myTasks: providerData.myTaskList?[index].text,checkTile: providerData.myTaskList?[index].checkTile,callBackTicker: (value){
-                  providerData.checkBox(index);
-                  providerData.listen();
+                child: TaskTile(myTasks: ref.watch(myDataStateNotifierProvider).myTaskList?[index].text,checkTile: ref.watch(myDataStateNotifierProvider).myTaskList?[index].checkTile,callBackTicker: (value){
+                  ref.read(myDataStateNotifierProvider.notifier).checkBox(index);
                 }),
               ),
             );
           },
-          itemCount: Provider.of<MyDataProvider>(context).myTaskList?.length ,
+          itemCount: ref.watch(myDataStateNotifierProvider).myTaskList?.length ,
         );
-      },
-    );
+
   }
 }

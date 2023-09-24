@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:my_todos/app/locator.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_todos/app/app_provider.dart';
+import 'package:my_todos/dashboard/screens/home_screen.dart';
 import 'package:my_todos/database/hive_database.dart';
-import 'package:my_todos/providers/taskData.dart';
-import 'package:my_todos/screens/to_do_screen.dart';
-import 'package:provider/provider.dart';
 
 void main() async {
   await HiveDatabase.registerHives();
-  setupLocator();
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context)=> MyDataProvider(),
-      child: MaterialApp(
+  Widget build(BuildContext context,WidgetRef ref) {
+    return MaterialApp(
+      navigatorKey: ref.watch(navigationServiceProvider).navigatorKey,
         home: ToDos(),
-      ),
     );
   }
 }

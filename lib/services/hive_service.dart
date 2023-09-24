@@ -20,7 +20,7 @@ class HiveDataBaseService {
   // NavigationState get navigationState => navigationStateBox.get('appNavigationState');
   List<dynamic>? getTasks(){
 
-    List<dynamic> myTasks = tokenBox.get('tasks');
+    List<dynamic>? myTasks = tokenBox.get('tasks');
     log('${myTasks}\n\n${myTasks.runtimeType}');
     return myTasks;
   }
