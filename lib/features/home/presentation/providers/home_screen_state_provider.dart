@@ -1,6 +1,6 @@
 import 'package:my_todos/app/app_provider.dart';
-import 'package:my_todos/dashboard/presentation/providers/state/dash_board_state.dart';
-import 'package:my_todos/dashboard/presentation/providers/state/dash_board_notifier.dart';
+import 'package:my_todos/features/home/presentation/providers/state/home_screen_state.dart';
+import 'package:my_todos/features/home/presentation/providers/state/home_screen_notifier.dart';
 import 'package:riverpod/riverpod.dart';
 
 final myDataStateNotifierProvider = StateNotifierProvider<MyDataProvider,HomeData>((ref) {

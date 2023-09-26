@@ -2,7 +2,10 @@
 import 'package:adoption/adoption.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_todos/UI/bottom_sheets/add_task_sheet.dart';
+import 'package:my_todos/features/home/presentation/screens/home_screen.dart';
+import 'package:my_todos/features/note/presentation/screens/note_screen.dart';
 import 'package:my_todos/enums/bottomsheet_type.dart';
 import 'package:my_todos/enums/dialog_type.dart';
 import 'package:my_todos/services/hive_service.dart';
@@ -46,5 +49,27 @@ final bottomSheetServiceProvider = Provider((ref) {
 
   return bottomSheetService;
 });
+final routerProvider = Provider((ref) {
+  final navigationService = ref.watch(navigationServiceProvider);
+  return GoRouter(
+      navigatorKey: navigationService.navigatorKey,
+      debugLogDiagnostics: true,
+      initialLocation: '/',
+      routes: [
+        GoRoute(
+            path: '/',
+            builder: (context, GoRouterState state) {
+              return const HomeScreen();
+            },
+          routes: [
+            GoRoute(
+                path: '${NoteScreen.id}',
+                builder: (context, GoRouterState state) {
+                  return const NoteScreen();
+                },),
+          ]
+        ),
 
+      ]);
+});
 

@@ -1,6 +1,6 @@
 
 import'package:hive_flutter/hive_flutter.dart';
-import 'package:my_todos/models/task.dart';
+import 'package:my_todos/features/home/data/tasks/task.dart';
 // import'package:hive/hive.dart';
 
 

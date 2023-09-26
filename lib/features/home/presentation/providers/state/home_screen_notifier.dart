@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:adoption/adoption.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:my_todos/app/app_provider.dart';
-import 'package:my_todos/dashboard/presentation/providers/state/dash_board_state.dart';
+import 'package:my_todos/features/home/data/tasks/task.dart';
+import 'package:my_todos/features/home/presentation/providers/state/home_screen_state.dart';
 import 'package:my_todos/enums/bottomsheet_type.dart';
-import 'package:my_todos/models/task.dart';
 import 'package:my_todos/services/hive_service.dart';
 import 'package:riverpod/riverpod.dart';
 

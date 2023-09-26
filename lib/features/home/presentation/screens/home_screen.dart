@@ -1,45 +1,20 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_todos/UI/bottom_sheets/add_task_sheet.dart';
-import 'package:my_todos/Utilities/myTaskList.dart';
 import 'package:my_todos/Utilities/Constants.dart';
 import 'package:my_todos/app/app_provider.dart';
-import 'package:my_todos/dashboard/presentation/providers/dash_board_state_provider.dart';
+import 'package:my_todos/features/home/presentation/providers/home_screen_state_provider.dart';
+import 'package:my_todos/features/note/presentation/screens/note_screen.dart';
+import 'package:my_todos/features/home/presentation/widgets/myTaskTile.dart';
 
 
-class ToDos extends ConsumerWidget {
-  const ToDos({Key? key}) : super(key: key);
+class HomeScreen extends ConsumerWidget {
+  static String id ='HomeScreen';
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     return Scaffold(
-      // drawer: Drawer(
-      //   width: MediaQuery.of(context).size.width - 114,
-      //   child: Column(
-      //     children: <Widget>[
-      //       Padding(
-      //         padding: const EdgeInsets.only(top: 36.0),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: [
-      //             Text('My Details'),
-      //             Padding(
-      //               padding: const EdgeInsets.only(left: 19.0),
-      //               child: IconButton(
-      //                 icon: const Icon(Icons.clear, size: 34),
-      //                 onPressed: () {
-      //                   Navigator.pop(context);
-      //                 },
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //
-      //     ],
-      //   ),
-      // ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(
@@ -76,16 +51,14 @@ class ToDos extends ConsumerWidget {
                         onSelected: (value){
                           log('$value');
                         },
-                        itemBuilder: (context) => ['safe box','notes',]//The safe box is  to keep  words, links and other things that might be referenced to later.
+                        itemBuilder: (context) => Features.values//The safe box is  to keep  words, links and other things that might be referenced to later.
                             .map(
-                              (value) => PopupMenuItem(
+                              (feature) => PopupMenuItem(
 
                               onTap: () {
-                                if(value=='safe box'){
-
-                                }
+                               feature.navigate(ref);
                               },
-                              child: Text('$value',)),
+                              child: Text('${feature.getName()}',)),
                         )
                             .toList(),
                         child:    CircleAvatar(
@@ -128,7 +101,25 @@ class ToDos extends ConsumerWidget {
                   padding: EdgeInsets.symmetric(
                       horizontal: 30),
                   decoration: decoratedBox,
-                  child: TaskList(),
+                  child: ListView.builder(
+                    itemBuilder: (context,index){
+                      return Material(
+                        color: Colors.white,
+                        child: TextButton(
+                          onLongPress: (){
+                            ref.read(myDataStateNotifierProvider.notifier).deleteTask(ref.watch(myDataStateNotifierProvider).myTaskList?[index]);
+                          },
+                          onPressed: (){
+                            return;
+                          },
+                          child: TaskTile(myTasks: ref.watch(myDataStateNotifierProvider).myTaskList?[index].text,checkTile: ref.watch(myDataStateNotifierProvider).myTaskList?[index].checkTile,callBackTicker: (value){
+                            ref.read(myDataStateNotifierProvider.notifier).checkBox(index);
+                          }),
+                        ),
+                      );
+                    },
+                    itemCount: ref.watch(myDataStateNotifierProvider).myTaskList?.length ,
+                  ),
                 ),
               ),
             ],
@@ -136,5 +127,31 @@ class ToDos extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+enum Features{
+  safeBox,
+  notes
+}
+
+extension on Features{
+  String getName(){
+    switch(this){
+      case Features.safeBox:
+        return 'Safe box';
+      case Features.notes:
+        return 'notes';
+    }
+  }
+  void navigate(WidgetRef ref){
+    switch(this){
+      case Features.safeBox:
+        // TODO: Handle this case.
+        break;
+      case Features.notes:
+        // TODO: Handle this case.
+      ref.watch(routerProvider).push('/${NoteScreen.id}');
+        break;
+    }
   }
 }

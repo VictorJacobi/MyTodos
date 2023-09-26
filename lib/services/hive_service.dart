@@ -1,10 +1,10 @@
 
 import'package:hive_flutter/hive_flutter.dart';
 import'package:hive/hive.dart';
-import 'package:my_todos/models/task.dart';
+import 'package:my_todos/features/home/data/tasks/task.dart';
 import'dart:developer';
 
-import 'package:my_todos/database/hive_database.dart';
+import 'package:my_todos/app/hive_database.dart';
 
 
 class HiveDataBaseService {

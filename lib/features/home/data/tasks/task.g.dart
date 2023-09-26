@@ -18,7 +18,7 @@ class TasksAdapter extends TypeAdapter<Tasks> {
     };
     return Tasks(
       text: fields[0] as String?,
-      checkTile: fields[1] as bool,
+      checkTile: fields[1] as bool?,
     );
   }
 
